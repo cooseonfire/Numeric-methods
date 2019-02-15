@@ -1,14 +1,19 @@
 import numpy as np
+import sys
 
 
 def check_compatability(matrix: list):
     matr = matrix
+    # coloumn and row check
+    for i in range(n):
+        if [row[i] for row in matr] == [0] * n:  # getting coloumn
+            raise ValueError
     for k in range(n):
         if matr[k] == [0] * n:
             raise ValueError
         for i in range(n - 1):
             if matr[i][i] == 0:
-                matr[i], matr[i + 1] = matr[i + 1], matr[k]
+                matr[i], matr[i + 1] = matr[i + 1], matr[i]
     return matr
 
 
@@ -19,7 +24,7 @@ try:
     a = check_compatability(input_matrix[:])
 except ValueError:
     print('Rank(A) < Rank(A|B)')
-    exit()
+    sys.exit()
 b = [float(i) for i in input('Enter free coefficients: ').split()]
 norm_b = max(b)
 k = 1  # number of step
@@ -35,6 +40,9 @@ for k in range(n):
         factor = -a[i][k]/a[k][k]
         eq_modified = [factor * a_past for a_past in a[k]]
         a[i] = [r + rk for (r, rk) in zip(a[i], eq_modified)]
+        if a[i] == [0] * n:
+            print('Rank(A) < Rank(A|B)')
+            sys.exit()
         b[i] = b[i] + factor*b[k]
 
 x = [0 for i in range(n)]
