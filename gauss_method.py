@@ -2,7 +2,7 @@ import numpy as np
 import sys
 
 
-def check_compatability(matrix: list):
+def check_compatability(matrix: list, b: list):
     matr = matrix
     # coloumn and row check
     for i in range(n):
@@ -14,19 +14,20 @@ def check_compatability(matrix: list):
         for i in range(n - 1):
             if matr[i][i] == 0:
                 matr[i], matr[i + 1] = matr[i + 1], matr[i]
+                b[i], b[i + 1] = b[i + 1], b[i]
     return matr
 
 
 n = int(input('Enter dimension n: '))
 print('Enter A matrix: ')
 input_matrix = [[float(i) for i in input().split()] for j in range(n)]
+b = [float(i) for i in input('Enter free coefficients: ').split()]
+norm_b = max(b)
 try:
-    a = check_compatability(input_matrix[:])
+    a = check_compatability(input_matrix[:], b)
 except ValueError:
     print('Rank(A) < Rank(A|B)')
     sys.exit()
-b = [float(i) for i in input('Enter free coefficients: ').split()]
-norm_b = max(b)
 k = 1  # number of step
 row_mod = []  # [(k-1) step]
 diagonal = []
