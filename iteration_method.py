@@ -50,8 +50,8 @@ def diagonal_priority(A: list):
             np.all(np.linalg.eigvals(A) > 0):
         return True
     for i in range(len(A)):
-        if not (2 * A[i][i] - sum(A[i]) > 0 or 2 * A[i][i]
-                - sum(column(A, i)) > 0):
+        if not (2 * abs(A[i][i]) - sum(map(abs, A[i])) > 0 or 2 * abs(A[i][i])
+                - sum(map(abs, column(A, i))) > 0):
             return False
     return True
 
@@ -79,12 +79,15 @@ print('Enter A matrix: ')
 input_matrix = [[float(i) for i in input().split()] for j in range(n)]
 b = [float(i) for i in input('Enter free coefficients: ').split()]
 try:
-    x = iteration_method(input_matrix[:], b, 0.01)
-    print(x)
+    x, k = iteration_method(input_matrix[:], b, 0.01)
+    x_f = [f'{i:.2f}' for i in x]
+    print(x_f)
+    print('k0 = ' + str(k))
 except ValueError:
     print('There is no convergence')
 if diagonal_priority(input_matrix[:]):
     x = seidel(input_matrix[:], b, 0.01)
-    print(x)
+    x_f = [f'{i:.2f}' for i in x]
+    print(x_f)
 else:
     print('There\'s no diagonal priority')
