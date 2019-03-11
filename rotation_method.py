@@ -3,7 +3,7 @@ from math import sin, cos, atan, isclose
 
 
 def symmetrize_matrix(A):
-    return A @ np.transpose(A)
+    return np.transpose(A) @ A
 
 
 def max_el_above(A):
@@ -43,6 +43,7 @@ n = int(input('Enter dimension n: '))
 print('Enter A matrix: ')
 input_matrix = [[float(i) for i in input().split()] for j in range(n)]
 values, vectors = rotate_matrix(input_matrix[:])
-print('Eigen values and vectors:')
-print(values)
-print(vectors)
+print('\nEigen values:\n')
+print(values, end='\n')
+print('\nEigen vectors:\n')
+print(vectors, end='\n')
