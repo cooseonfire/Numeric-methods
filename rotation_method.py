@@ -39,11 +39,12 @@ def rotate_matrix(A):
     return np.diag(A), U_k
 
 
-n = int(input('Enter dimension n: '))
-print('Enter A matrix: ')
-input_matrix = [[float(i) for i in input().split()] for j in range(n)]
-values, vectors = rotate_matrix(input_matrix[:])
-print('\nEigen values:\n')
-print(values, end='\n')
-print('\nEigen vectors:\n')
-print(vectors, end='\n')
+if __name__ == "__main__":
+    n = int(input('Enter dimension n: '))
+    print('Enter A matrix: ')
+    input_matrix = [[float(i) for i in input().split()] for j in range(n)]
+    values, vectors = rotate_matrix(input_matrix[:])
+    print('\nEigen values:\n')
+    print(values, end='\n')
+    print('\nEigen vectors:\n')
+    print(vectors, end='\n')

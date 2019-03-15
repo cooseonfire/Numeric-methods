@@ -161,87 +161,88 @@ def splines_to_plot(splines, xn, res):
     return X, Y
 
 
-points = [(0.135, -2.132), (0.876, -2.113), (1.336, -1.613),
-          (2.301, -0.842), (2.642, 1.204)]
+if __name__ == "__main__":
+    points = [(0.135, -2.132), (0.876, -2.113), (1.336, -1.613),
+            (2.301, -0.842), (2.642, 1.204)]
 
-# Lagrange polynomial
-x, y = zip(*points)
-x_n = np.linspace(min(x), max(x), 30)
-y_n1 = [lagrange(points, len(points)).subs({'x': i})
-       for i in x_n]
-plt.title('Lagrange')
-plt.plot(x, y, 'o', x_n, y_n1)
-plt.grid(True)
-plt.show()
-print(f'L(x) = {lagrange(points, len(points))}')
-print(f'L4(x1 + x2) = '
-      f'{lagrange(points, 4).subs( {"x": points[0][0] + points[1][0]})}')
-
-
-# Finite diffs table
-f_diffs = finite_diffs(points)
-t1 = PrettyTable([])
-column_names = ['xk', 'yk', 'd1', 'd2', 'd3', 'd4']
-t1.add_column(column_names[0], x)
-for i in range(len(f_diffs)):
-    t1.add_column(column_names[i + 1], f_diffs[i])
-print(t1.get_string(title='Finite diffs'))
+    # Lagrange polynomial
+    x, y = zip(*points)
+    x_n = np.linspace(min(x), max(x), 30)
+    y_n1 = [lagrange(points, len(points)).subs({'x': i})
+        for i in x_n]
+    plt.title('Lagrange')
+    plt.plot(x, y, 'o', x_n, y_n1)
+    plt.grid(True)
+    plt.show()
+    print(f'L(x) = {lagrange(points, len(points))}')
+    print(f'L4(x1 + x2) = '
+        f'{lagrange(points, 4).subs( {"x": points[0][0] + points[1][0]})}')
 
 
-# Divided diffs
-d_diffs = divided_diffs(points)
-t1 = PrettyTable([])
-column_names = ['xk', 'yk', 'f1', 'f2', 'f3', 'f4']
-t1.add_column(column_names[0], x)
-for i in range(len(f_diffs)):
-    t1.add_column(column_names[i + 1], d_diffs[i])
-print(t1.get_string(title='Divided diffs'))
+    # Finite diffs table
+    f_diffs = finite_diffs(points)
+    t1 = PrettyTable([])
+    column_names = ['xk', 'yk', 'd1', 'd2', 'd3', 'd4']
+    t1.add_column(column_names[0], x)
+    for i in range(len(f_diffs)):
+        t1.add_column(column_names[i + 1], f_diffs[i])
+    print(t1.get_string(title='Finite diffs'))
 
 
-# Newton polynomial
-print(f'N(x) = {newton(points, len(points))}')
-print(f'N4(x1 + x2) = '
-      f'{newton(points, 4).subs( {"x": points[0][0] + points[1][0]})}')
-y_n2 = [newton(points, len(points)).subs({'x': i})
-       for i in x_n]
-plt.plot(x, y, 'o', x_n, y_n2)
-plt.title('Newton')
-plt.grid(True)
-plt.show()
+    # Divided diffs
+    d_diffs = divided_diffs(points)
+    t1 = PrettyTable([])
+    column_names = ['xk', 'yk', 'f1', 'f2', 'f3', 'f4']
+    t1.add_column(column_names[0], x)
+    for i in range(len(f_diffs)):
+        t1.add_column(column_names[i + 1], d_diffs[i])
+    print(t1.get_string(title='Divided diffs'))
 
 
-# Linear spline
-print('Linear spline: ')
-print(f'F(x) = {linear_spline(points)}')
-y_n3 = [linear_spline(points, i) for i in x_n]
-plt.plot(x, y, 'o', x_n, y_n3)
-plt.title('Linear')
-plt.grid(True)
-plt.show()
+    # Newton polynomial
+    print(f'N(x) = {newton(points, len(points))}')
+    print(f'N4(x1 + x2) = '
+        f'{newton(points, 4).subs( {"x": points[0][0] + points[1][0]})}')
+    y_n2 = [newton(points, len(points)).subs({'x': i})
+        for i in x_n]
+    plt.plot(x, y, 'o', x_n, y_n2)
+    plt.title('Newton')
+    plt.grid(True)
+    plt.show()
 
 
-# Quadratic spline
-print('Quadratic spline: ')
-print(f'F(x) = {quadratic_spline(points)}')
-y_n4 = [quadratic_spline(points, i) for i in x_n]
-plt.plot(x, y, 'o', x_n, y_n4)
-plt.title('Quadratic')
-plt.grid(True)
-plt.show()
+    # Linear spline
+    print('Linear spline: ')
+    print(f'F(x) = {linear_spline(points)}')
+    y_n3 = [linear_spline(points, i) for i in x_n]
+    plt.plot(x, y, 'o', x_n, y_n3)
+    plt.title('Linear')
+    plt.grid(True)
+    plt.show()
 
 
-print('Cubic spline: ')
-print(f'F(x) = {cubic_spline(points)}')
-splines, xn = cubic_spline(points, True)
-x_n2, y_n5 = splines_to_plot(splines, xn, 40)
-plt.plot(x, y, 'o', x_n2, y_n5)
-plt.title('Cubic')
-plt.grid(True)
-plt.show()
+    # Quadratic spline
+    print('Quadratic spline: ')
+    print(f'F(x) = {quadratic_spline(points)}')
+    y_n4 = [quadratic_spline(points, i) for i in x_n]
+    plt.plot(x, y, 'o', x_n, y_n4)
+    plt.title('Quadratic')
+    plt.grid(True)
+    plt.show()
 
 
-plt.plot(x, y, 'o', x_n, y_n1, x_n, y_n2, x_n, y_n3, x_n, y_n4, x_n2, y_n5)
-plt.legend(('Points', 'Lagrange', 'Newton', 'Linear', 'Quadratic', 'Cubic'),
-           loc='upper left')
-plt.grid(True)
-plt.show()
+    print('Cubic spline: ')
+    print(f'F(x) = {cubic_spline(points)}')
+    splines, xn = cubic_spline(points, True)
+    x_n2, y_n5 = splines_to_plot(splines, xn, 40)
+    plt.plot(x, y, 'o', x_n2, y_n5)
+    plt.title('Cubic')
+    plt.grid(True)
+    plt.show()
+
+
+    plt.plot(x, y, 'o', x_n, y_n1, x_n, y_n2, x_n, y_n3, x_n, y_n4, x_n2, y_n5)
+    plt.legend(('Points', 'Lagrange', 'Newton', 'Linear', 'Quadratic', 'Cubic'),
+            loc='upper left')
+    plt.grid(True)
+    plt.show()
